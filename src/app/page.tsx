@@ -1,48 +1,96 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import scrollTrigger from "@/utils/scrollTrigger";
 import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { useEffect } from "react";
-
-interface TriggerElement {
-  id: number;
-  transform: string;
-  color: string;
-  duration: number;
-}
+import Image from "next/image";
 
 export default function Home() {
-  const triggerElement: TriggerElement[] = [
-    { id: 1, transform: "translateX(500px)", color: "#00A1EF", duration: 1.3 },
-    { id: 2, transform: "translateX(750px)", color: "#F9C0C1", duration: 1.5 },
-    { id: 3, transform: "translateX(1000px)", color: "#8BF461", duration: 1.7 },
-    { id: 4, transform: "translateX(1250px)", color: "#FFD76A", duration: 1.9 },
-  ];
+  gsap.registerPlugin(ScrollTrigger);
 
-  useEffect(() => {
-    triggerElement.forEach(({ transform, id, duration, color }) => {
-      gsap.to(`.title${id}`, {
-        transform,
-        duration,
-        color,
-      });
-    });
+  useEffect(() => {}, []);
 
-    scrollTrigger(".box1", {
-      scrollTrigger: {
-        start: "top",
-        scrub: true,
-      },
-      position: "sticky",
-    });
+  return (
+    <main className="relative">
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section2.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section3.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
 
-    scrollTrigger(".box2", {
-      scrollTrigger: {
-        trigger: ".box2",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-      },
-    });
-  }, []);
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section4.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section5.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section6.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full h-full">
+        <div className="w-full h-full overflow-hidden">
+          <Image
+            src="/img/Section7.png"
+            alt=""
+            className="w-full h-full"
+            width={1000}
+            height={1000}
+          />
+        </div>
+      </section>
+    </main>
+  );
 }
