@@ -1,65 +1,120 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Image, { type StaticImageData } from "next/image";
-import img from "../../public/img/Section.png";
-import img2 from "../../public/img/Section2.png";
-import img3 from "../../public/img/Section3.png";
-import img4 from "../../public/img/Section4.png";
-import img5 from "../../public/img/Section5.png";
-import img6 from "../../public/img/Section6.png";
-import img7 from "../../public/img/Section7.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const imageUrls: StaticImageData[] = [img, img2, img3, img4, img5, img6, img7];
+const firstGroup = [
+  "/img/Section.png",
+  "/img/Section2.png",
+  "/img/Section3.png",
+];
+
+const secondGroup = [
+  "/img/Section4.png",
+  "/img/Section5.png",
+  "/img/Section6.png",
+  "/img/Section7.png",
+];
 
 const GsapAnimation = () => {
-  const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const firstGroupRef = useRef<(HTMLDivElement | null)[]>([]);
+  const secondGroupRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
-    const images = imagesRef.current.filter(Boolean) as HTMLDivElement[]; // null 필터링
+    const firstGroupPanels = firstGroupRef.current.filter(
+      Boolean
+    ) as HTMLDivElement[];
+    firstGroupPanels.forEach((panel) => {
+      gsap.fromTo(
+        panel,
+        { opacity: 1, scale: 1 },
+        {
+          opacity: 1,
+          scale: 1,
+          ease: "power2.inOut",
+          duration: 10,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top top",
+            end: "+=100%",
+            pin: true,
+            pinSpacing: false,
+            scrub: true,
+            onEnter: () => {
+              gsap.to(panel, { opacity: 1, scale: 1, duration: 1.5 });
+            },
+            onLeave: () => {
+              gsap.to(panel, { opacity: 0, scale: 1, duration: 1.5 });
+            },
+            onEnterBack: () => {
+              gsap.to(panel, { opacity: 1, scale: 1, duration: 1.5 });
+            },
+            onLeaveBack: () => {
+              gsap.to(panel, { opacity: 0, scale: 1, duration: 1.5 });
+            },
+          },
+        }
+      );
+    });
 
-    images.forEach((panel, idx) => {
-      let scale = 1;
-
-      if (idx !== images.length - 1) {
-        scale = 0.9 + 0.025 * idx;
-      }
-
-      gsap.to(panel, {
-        scale: scale,
-        ease: "none",
-        scrollTrigger: {
-          trigger: panel,
-          start: "top " + (70 + 40 * idx),
-          end: "bottom +=650px",
-          endTrigger: ".end",
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
-        },
-      });
+    const secondGroupPanels = secondGroupRef.current.filter(
+      Boolean
+    ) as HTMLDivElement[];
+    secondGroupPanels.forEach((panel) => {
+      gsap.fromTo(
+        panel,
+        { opacity: 1, scale: 1 },
+        {
+          opacity: 1,
+          scale: 1,
+          ease: "power2.inOut",
+          duration: 10,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top top",
+            end: "bottom top",
+            pin: true,
+            pinSpacing: false,
+            scrub: 2,
+          },
+        }
+      );
     });
   }, []);
 
   return (
-    <div className="flex flex-col gap-12 mx-auto max-w-2xl py-12">
-      {imageUrls.map((image, idx) => (
+    <div className="flex flex-col">
+      {firstGroup.map((image, idx) => (
         <div
           key={idx}
           ref={(e) => {
-            imagesRef.current[idx] = e;
+            firstGroupRef.current[idx] = e;
           }}
-          className=""
+          className="relative w-screen h-screen overflow-hidden"
         >
-          <Image
+          <img
             src={image}
-            alt={`Image ${idx + 1}`}
-            className="w-full h-auto object-cover rounded-lg shadow-lg"
-            layout="fill"
+            alt={`First Group Image ${idx + 1}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+      {secondGroup.map((image, idx) => (
+        <div
+          key={idx}
+          ref={(e) => {
+            secondGroupRef.current[idx] = e;
+          }}
+          className="sticky top-0 w-screen h-screen overflow-hidden"
+        >
+          <img
+            src={image}
+            alt={`Second Group Image ${idx + 1}`}
+            className="w-full h-full object-cover"
           />
         </div>
       ))}
