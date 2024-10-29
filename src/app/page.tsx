@@ -1,19 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-
-import { gsap } from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect } from "react";
-import Image from "next/image";
+import GsapAnimation from "@/components/GsapAnimation";
 
 export default function Home() {
-  gsap.registerPlugin(ScrollTrigger);
-
-  useEffect(() => {}, []);
-
   return (
-    <main className="relative">
-      <section className="flex flex-col items-center w-full h-full">
+    <main>
+      <GsapAnimation />
+
+      {/*<section className="flex flex-col items-center w-full h-full">
         <div className="w-full h-full overflow-hidden">
           <Image
             src="/img/Section.png"
@@ -90,7 +82,7 @@ export default function Home() {
             height={1000}
           />
         </div>
-      </section>
+      </section>*/}
     </main>
   );
 }
